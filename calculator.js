@@ -3,18 +3,22 @@ const operation = process.argv[2];
 const a = +process.argv[3];
 const b = +process.argv[4];
 
-if(operation === "addition"){
-    console.log(calculate.addition(a,b));
-} else 
-if(operation === "subtraction"){
-    console.log(calculate.subtraction(a,b));
-} else 
-if(operation === "multiply"){
-    console.log(calculate.multiply(a,b));
-}else 
-if(operation === "division"){
-    console.log(calculate.division(a,b));
-}else 
-if(operation === "modulus"){
-    console.log(calculate.modulus(a,b));
+switch (operation) {
+  case "addition":
+    console.log(calculate.addition(a, b));
+    break;
+  case "subtraction":
+    console.log(calculate.subtraction(a, b));
+    break;
+  case "multiply":
+    console.log(calculate.multiply(a, b));
+    break;
+  case "division":
+    console.log(calculate.division(a, b));
+    break;
+  case "modulus":
+    console.log(calculate.modulus(a, b));
+    break;
+    default : console.log("Choose a right operation ");
+    break;
 }
