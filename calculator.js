@@ -1,5 +1,13 @@
 const operation = require("./module/operation");
 const a = +process.argv[2];
 const b = +process.argv[3];
-const output = operation.multiply(a,b);
-console.log(output);
+const output1 = operation.multiply(a, b);
+console.log(output1);
+const output2 = operation.addition(a, b);
+console.log(output2);
+const output3 = operation.subtraction(a, b);
+console.log(output3);
+const output4 = operation.division(a, b);
+console.log(output4);
+const output5 = operation.modulus(a, b);
+console.log(output5);
