@@ -8,7 +8,7 @@ let router = express.Router();
 
 router.get(
   "/",
-  function (req, res, next) {
+  async function (req, res, next) {
     console.log("rputer calld");
     fs.mkdirSync("assests/videos", { recursive: true });
     let url = [
@@ -18,17 +18,20 @@ router.get(
       "https://www.youtube.com/watch?v=6Z7tW64jpTM",
       "https://www.youtube.com/watch?v=6Z7tW64jpTM",
     ];
-    Promise.all(url).then((response) => {
-      response.map((v, index) =>
-        ytdl(url[index]).pipe(
-          fs.createWriteStream(
-            `/home/hs/Desktop/node-training/assests/videos/${
-              index + 1
-            }Youtubevideo.mp4`
-          )
+    await Promise.all(url.map(async (v, index) => {
+      return new Promise((resolve) => {
+        const writeStream = fs.createWriteStream(
+          `/home/hs/Desktop/node-training/assests/videos/${
+            index + 1
+          }Youtubevideo.mp4`
         )
-      );
-    });
+        writeStream.on('close', () => {
+          // console.log('this')
+          resolve()
+        })
+        ytdl(v).pipe(writeStream)
+      })
+    }))
     const details = url.map((val, index) =>
       fs.statSync(
         `/home/hs/Desktop/node-training/assests/videos/${
