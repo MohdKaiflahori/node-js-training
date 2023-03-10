@@ -29,18 +29,6 @@ router.get(
         )
       );
     });
-
-    setTimeout(() => {
-      const read = url.map((val, index) =>
-        fs.readFileSync(
-          `/home/hs/Desktop/node-training/assests/videos/${
-            index + 1
-          }Youtubevideo.mp4`,
-          "base64url"
-        )
-      );
-    }, 10000);
-
     const details = url.map((val, index) =>
       fs.statSync(
         `/home/hs/Desktop/node-training/assests/videos/${
@@ -68,9 +56,6 @@ router.get(
       file_created_date: details[index].birthtime,
     }));
     console.table(fileValues);
-    // console.log('details :', details);
-    // console.table('filesize :', filesize);
-
     res.end();
   },
   app.use(router)
