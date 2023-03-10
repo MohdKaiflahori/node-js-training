@@ -3,24 +3,24 @@ const eventEmitter = new EveentEmitter();
 const prompt = require("prompt");
 
 eventEmitter.on("add", (number1, number2) => {
-  const a = parseInt(number1) + parseInt(number2);
-  console.log("Result is :", a);
+  const Result = parseInt(number1) + parseInt(number2);
+  console.log("Result is :", Result);
 });
 eventEmitter.on("sub", (number1, number2) => {
-  const a = parseInt(number1) - parseInt(number2);
-  console.log("Result is :", a);
+  const Result = parseInt(number1) - parseInt(number2);
+  console.log("Result is :", Result);
 });
 eventEmitter.on("multiply", (number1, number2) => {
-  const a = parseInt(number1) * parseInt(number2);
-  console.log("Result is :", a);
+  const Result = parseInt(number1) * parseInt(number2);
+  console.log("Result is :", Result);
 });
 eventEmitter.on("division", (number1, number2) => {
-  const a = parseInt(number1) / parseInt(number2);
-  console.log("Result is :", a);
+  const Result = parseInt(number1) / parseInt(number2);
+  console.log("Result is :", Result);
 });
 eventEmitter.on("mod", (number1, number2) => {
-  const a = parseInt(number1) % parseInt(number2);
-  console.log("Result is :", a);
+  const Result = parseInt(number1) % parseInt(number2);
+  console.log("Result is :", Result);
 });
 
 prompt.start();
