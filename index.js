@@ -2,39 +2,50 @@ const EveentEmitter = require("events");
 const eventEmitter = new EveentEmitter();
 const prompt = require("prompt");
 
-eventEmitter.on('add' (number1 , number2) => {
-    number1 + number2
+eventEmitter.on("add", (number1, number2) => {
+  const a = parseInt(number1) + parseInt(number2);
+  console.log("Result is :", a);
 });
-eventEmitter.on('sub' (number1 , number2) =>  {
-    number1 - number2
-})
-eventEmitter.on('multiply' (number1 , number2) =>  { 
-    number1 * number2
-})
-eventEmitter.on('division' (number1 , number2) =>  { 
-    number1 / number2
-})
-eventEmitter.on('mod' (number1 , number2) =>  {
-    number1 % number2
-})
+eventEmitter.on("sub", (number1, number2) => {
+  const a = parseInt(number1) - parseInt(number2);
+  console.log("Result is :", a);
+});
+eventEmitter.on("multiply", (number1, number2) => {
+  const a = parseInt(number1) * parseInt(number2);
+  console.log("Result is :", a);
+});
+eventEmitter.on("division", (number1, number2) => {
+  const a = parseInt(number1) / parseInt(number2);
+  console.log("Result is :", a);
+});
+eventEmitter.on("mod", (number1, number2) => {
+  const a = parseInt(number1) % parseInt(number2);
+  console.log("Result is :", a);
+});
 
 prompt.start();
 prompt.get(["operation", "number1", "number2"], function (err, result) {
-  switch (result) {
+  switch (result.operation) {
     case "add":
-      console.log(eventEmitter.emit("add"));
+      eventEmitter.emit("add", result.number1, result.number2);
       break;
     case "sub":
-      console.log(eventEmitter.emit("sub"));
+      eventEmitter.emit("sub", result.number1, result.number2);
+
       break;
     case "multiply":
-      console.log(eventEmitter.emit("multiply"));
+      eventEmitter.emit("multiply", result.number1, result.number2);
+
       break;
     case "division":
-      console.log(eventEmitter.emit("division"));
+      eventEmitter.emit("division", result.number1, result.number2);
+
       break;
     case "mod":
-      console.log(eventEmitter.emit("mod"));
+      eventEmitter.emit("mod", result.number1, result.number2);
+      break;
+      default :
+      console.log("Choose right operation");
       break;
   }
 });
