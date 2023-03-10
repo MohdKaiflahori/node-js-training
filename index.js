@@ -7,11 +7,16 @@ eventEmitter.on('add' (number1 , number2) => {
 });
 eventEmitter.on('sub' (number1 , number2) =>  {
     number1 - number2
-}
-)
-eventEmitter.on('multiply' (number1 , number2) =>  {number1 * number2})
-eventEmitter.on('division' (number1 , number2) =>  { number1 / number2})
-eventEmitter.on('mod' (number1 , number2) =>  {number1 % number2})
+})
+eventEmitter.on('multiply' (number1 , number2) =>  { 
+    number1 * number2
+})
+eventEmitter.on('division' (number1 , number2) =>  { 
+    number1 / number2
+})
+eventEmitter.on('mod' (number1 , number2) =>  {
+    number1 % number2
+})
 
 prompt.start();
 prompt.get(["operation", "number1", "number2"], function (err, result) {
