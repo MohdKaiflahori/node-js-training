@@ -3,24 +3,45 @@ const eventEmitter = new EveentEmitter();
 const prompt = require("prompt");
 
 eventEmitter.on("add", (number1, number2) => {
-  const Result = parseInt(number1) + parseInt(number2);
-  console.log("Result is :", Result);
+  if (isNaN(parseInt(number1)) || isNaN(parseInt(number2))) {
+     console.log("enter a valid number");
+  } else {
+    const Result = parseInt(number1) + parseInt(number2);
+    console.log("Result is :", Result);
+  }
 });
 eventEmitter.on("sub", (number1, number2) => {
+  if (isNaN(parseInt(number1)) || isNaN(parseInt(number2))) {
+    console.log("enter a valid number");
+ } else {
   const Result = parseInt(number1) - parseInt(number2);
   console.log("Result is :", Result);
+ }
+  
 });
 eventEmitter.on("multiply", (number1, number2) => {
+  if (isNaN(parseInt(number1)) || isNaN(parseInt(number2))) {
+    console.log("enter a valid number");
+ } else {
   const Result = parseInt(number1) * parseInt(number2);
   console.log("Result is :", Result);
+ }
 });
 eventEmitter.on("division", (number1, number2) => {
+  if (isNaN(parseInt(number1)) || isNaN(parseInt(number2))) {
+    console.log("enter a valid number");
+ } else {
   const Result = parseInt(number1) / parseInt(number2);
   console.log("Result is :", Result);
+ }
 });
 eventEmitter.on("mod", (number1, number2) => {
-  const Result = parseInt(number1) % parseInt(number2);
+  if (isNaN(parseInt(number1)) || isNaN(parseInt(number2))) {
+    console.log("enter a valid number");
+ } else {
+  const Result = parseInt(number1) / parseInt(number2);
   console.log("Result is :", Result);
+ }
 });
 
 prompt.start();
@@ -44,7 +65,7 @@ prompt.get(["operation", "number1", "number2"], function (err, result) {
     case "mod":
       eventEmitter.emit("mod", result.number1, result.number2);
       break;
-      default :
+    default:
       console.log("Choose right operation");
       break;
   }
