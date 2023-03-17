@@ -13,9 +13,9 @@ const middleware = async (req, res, next) => {
       console.log("email or number  is not valid");
       res.send("Invalid email or phone number");
     } 
-    else if(email === chekcIfUserExist.email){
-        console.log("Email already ragister");
-        res.send("Email already ragister");
+    else if(chekcIfUserExist){
+        console.log("User with this email already ragister");
+        res.send("User already ragister with this email");
     }
     else {
       next();
