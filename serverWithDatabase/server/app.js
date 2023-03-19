@@ -6,7 +6,7 @@ const bodyParser = require("body-parser");
 
 
 dotenv.config({path: './.env'})
-const port = process.env.PORT || 6756;
+const port = process.env.PORT || 5399;
 require('./db/connection')
 
 // to understand the json request
@@ -34,15 +34,11 @@ app.get('/check', middleware ,(req,res) => {
     res.send("hello world from the server with validation")
 })
 
-
-
 app.listen(port, () => {
     console.log("server is running on port :", port  )
 })
 
 
-// gulistan66a  username
-// zWi6By89z5ljnLFd  password
 
 
 

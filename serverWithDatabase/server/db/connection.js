@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
 // add the password after Username and the database name after the mongodb.net
 const dataBase = process.env.DATABASE;
