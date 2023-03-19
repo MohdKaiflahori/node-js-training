@@ -1,7 +1,9 @@
 const express = require("express");
 const Book = require("../model/book");
 const app = express();
+const db = require('mongoose')
 const mw = require('../middleware/middleware1');
+
 // const User = require("../model/user");
 // const bcrypt = require("bcryptjs");
 
@@ -35,17 +37,53 @@ app.get("/get", (req, res) => {
 //     console.error(error);
 //   } 
 // });
-app.post("/book",  async (req, res)=>{
+app.post("/book", mw.middlewarePost ,  async (req, res)=>{
   try {
     const {bookName , bookAuthor , bookPublication , bookVersion , releasedDate } = req.body;
     console.log('req.body :', req.body);
     const bookData = new Book({bookName,bookAuthor,bookPublication,bookVersion,releasedDate})
-    await bookData.sava();
+    await bookData.save();
     res.send("data stored successfully.")
   } catch (error) {
     console.error(error);
   }
-})
+});
+
+app.put("/updateBook", mw.middlewarePut,  async (req, res)=>{
+  try {
+    const { bookVersion } = req.body;
+    console.log('req.body :', req.body);
+    const checkIfBookExist = await Book.findOne({ bookVersion }); 
+        const updateVersion = await Book.updateOne({ checkIfBookExist },
+          {$set : {bookVersion}}); 
+          console.log('updateVersion :', updateVersion);
+          res.send("data update successfully.")
+  } catch (error) {
+    console.error(error);
+  }
+});
+app.delete("/deleteBook", mw.middlewareDel , async (req, res) => {
+  try {
+    const { bookName , bookAuthor } = req.body;
+    const checkIfBookExist = await Book.findOne({bookName , bookAuthor});
+    console.log('checkIfBookExist :', checkIfBookExist);
+    const { bookPublication , bookVersion , releasedDate } = checkIfBookExist;
+    const deletedBook = await Book.deleteMany({bookName , bookAuthor , bookPublication , bookVersion , releasedDate});
+    console.log('deletedBook :', deletedBook);
+    res.send("data deleted successfully")
+  } catch (error) {
+    console.error(error); 
+  }
+});
+app.get("/getBook", async (req,res) => {
+  try {
+   const bookData = await Book.find();
+   console.log("bookData : ",  bookData);
+   res.json(bookData);
+  } catch (error) {
+    console.error(error);
+  }
+});
 
 // app.post("/login", async (req, res) => {
 //   try {
