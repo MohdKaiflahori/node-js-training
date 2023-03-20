@@ -1,8 +1,8 @@
 const express = require("express");
 const Book = require("../model/book");
 const app = express();
-const db = require("mongoose");
 const mw = require("../middleware/middleware1");
+const data = require('../config/config');
 
 // const User = require("../model/user");
 // const bcrypt = require("bcryptjs");
@@ -41,16 +41,14 @@ app.post("/book", mw.middlewarePost, async (req, res) => {
   try {
     const { bookName, bookAuthor, bookPublication, bookVersion, releasedDate } =
       req.body;
-    console.log("req.body :", req.body);
     const chekIfBookExist = await Book.findOne({ bookName });
-    console.log("chekIfBookExist :", chekIfBookExist);
     if (chekIfBookExist) {
       if (
         bookName === chekIfBookExist.bookName &&
         bookAuthor === chekIfBookExist.bookAuthor
       ) {
-        console.log("Book already exist ");
-        res.send("Book already exist");
+        console.log(data.BOOK_EXIST);
+        res.send(data.BOOK_EXIST);
       }
     } else {
       const bookData = new Book({
@@ -61,7 +59,7 @@ app.post("/book", mw.middlewarePost, async (req, res) => {
         releasedDate,
       });
       await bookData.save();
-      res.send("data stored successfully.");
+      res.send(data.BOOK_STORE);
     }
   } catch (error) {
     console.error(error);
@@ -71,21 +69,17 @@ app.post("/book", mw.middlewarePost, async (req, res) => {
 app.put("/updateBook", mw.middlewarePut, async (req, res) => {
   try {
     const { bookVersion, bookName } = req.body;
-    console.log("req.body :", req.body);
     const checkIfBookExist = await Book.findOne({ bookName });
-    console.log("checkIfBookExist :", checkIfBookExist);
-    if (checkIfBookExist) {
       if (bookVersion === checkIfBookExist.bookVersion) {
-        console.log("Book version is up to date");
-        res.send("Book version is up to date");
+        console.log(data.INVALID_VERSION);
+        res.send(data.INVALID_VERSION);
       }
-    } else {
+    else {
       const updateVersion = await Book.updateOne(
         { bookName },
         { $set: { bookVersion } }
       );
-      console.log("updateVersion :", updateVersion);
-      res.send("data update successfully.");
+      res.send(data.BOOK_UPDATE);
     }
   } catch (error) {
     console.error(error);
@@ -95,15 +89,13 @@ app.delete("/deleteBook", mw.middlewareDel, async (req, res) => {
   try {
     const { bookName, bookAuthor } = req.body;
     const checkIfBookExist = await Book.findOne({ bookName });
-    console.log("checkIfBookExist :", checkIfBookExist);
-    if (checkIfBookExist) {
       if (
         bookName !== checkIfBookExist.bookName ||
         bookAuthor !== checkIfBookExist.bookAuthor
       ) {
-        console.log("Didn't find a book");
-        res.send("Didn't find a book");
-      }
+        console.log(data.BOOK_ISNOTEXIST);
+        res.send(data.BOOK_ISNOTEXIST);
+      
     } else {
       const { bookPublication, bookVersion, releasedDate } = checkIfBookExist;
       const deletedBook = await Book.deleteMany({
@@ -113,13 +105,13 @@ app.delete("/deleteBook", mw.middlewareDel, async (req, res) => {
         bookVersion,
         releasedDate,
       });
-      console.log("deletedBook :", deletedBook);
-      res.send("data deleted successfully");
+      res.send(data.BOOK_DELETE);
     }
   } catch (error) {
     console.error(error);
   }
 });
+
 app.get("/getBook", async (req, res) => {
   try {
     const bookData = await Book.find();

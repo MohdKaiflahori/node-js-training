@@ -1,53 +1,55 @@
 const Book = require("../model/book");
+const data = require("../config/config");
 
-const middlewarePost = async  (req, res , next) => {
-    try {
-        const {bookName , bookAuthor , bookPublication , bookVersion , releasedDate } = req.body;
-        if(!bookName || !bookAuthor || !bookPublication || !bookVersion  || !releasedDate){
-             console.log("Invalid input");
-             res.send("Invalid details");
-           }
-             else {
-                next();
-             }
-        
-    } catch (error) {
-        console.error(error);
+const middlewarePost = async (req, res, next) => {
+  try {
+    const { bookName, bookAuthor, bookPublication, bookVersion, releasedDate } =
+      req.body;
+    if (
+      !bookName ||
+      !bookAuthor ||
+      !bookPublication ||
+      !bookVersion ||
+      !releasedDate
+    ) {
+      console.log(data.INVALID_DATA);
+      res.send(data.INVALID_DATA);
+    } else {
+      next();
     }
-}
-const middlewarePut = async (req,res,next) => {
-    try {
-        const {  bookVersion } = req.body;
-        if(!bookVersion){
-             console.log("Version is invalid or version is up to date");
-             res.send("Version is invalid or version is up to date");
-        }
-             else {
-                next();
-             }
-        
-    } catch (error) {
-        console.error(error);
-    }
+  } catch (error) {
+    console.error(error);
+  }
+};
 
-}
-const middlewareDel = async (req,res,next) => {
-    try {
-        const {bookAuthor,bookName} = req.body;
-        if(!bookName || !bookAuthor ){
-            console.log("Please specify bookname or authorname ");
-            res.send("Please specify bookname or authorname ")
-        }
-        else{
-            next();
-        }
-
-    } catch (error) {
-        console.error(error);
+const middlewarePut = async (req, res, next) => {
+  try {
+    const { bookVersion } = req.body;
+    if (!bookVersion) {
+      console.log(data.INVALID_VERSION);
+      res.send(data.INVALID_VERSION);
+    } else {
+      next();
     }
-}
+  } catch (error) {
+    console.error(error);
+  }
+};
+const middlewareDel = async (req, res, next) => {
+  try {
+    const { bookAuthor, bookName } = req.body;
+    if (!bookName || !bookAuthor) {
+      console.log(data.INVALID_BOOKDETAIL);
+      res.send(data.INVALID_BOOKDETAIL);
+    } else {
+      next();
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
 module.exports = {
-    middlewarePost , 
-    middlewarePut ,
-    middlewareDel ,
-}  
+  middlewarePost,
+  middlewarePut,
+  middlewareDel,
+};
