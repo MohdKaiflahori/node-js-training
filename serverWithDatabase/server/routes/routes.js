@@ -10,11 +10,6 @@ app.get("/get", (req, res) => {
 app.post("/user", middleware, async (req, res) => {
   const { name, phone, email, profession, password } = req.body;
   try {
-    // console.log(req.new);
-    console.log(
-      ">serverWithDatabase | [routes.js] > #10 | req.body : ",
-      req.body
-    );
     const user = new User({name, email, phone, profession, password});
     await user.save();
     res.send(req.body);
