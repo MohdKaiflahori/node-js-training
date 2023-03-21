@@ -66,7 +66,7 @@ app.post("/book", mw.middlewarePost, async (req, res) => {
   }
 });
 
-app.put("/updateBook", mw.middlewarePut, async (req, res) => {
+app.put("/book", mw.middlewarePut, async (req, res) => {
   try {
     const { bookVersion, bookName } = req.body;
     const checkIfBookExist = await Book.findOne({ bookName });
@@ -85,7 +85,7 @@ app.put("/updateBook", mw.middlewarePut, async (req, res) => {
     console.error(error);
   }
 });
-app.delete("/deleteBook", mw.middlewareDel, async (req, res) => {
+app.delete("/book", mw.middlewareDel, async (req, res) => {
   try {
     const { bookName, bookAuthor } = req.body;
     const checkIfBookExist = await Book.findOne({ bookName });
@@ -112,15 +112,27 @@ app.delete("/deleteBook", mw.middlewareDel, async (req, res) => {
   }
 });
 
-app.get("/getBook", async (req, res) => {
+app.get("/book", async (req, res) => {
   try {
-    const bookData = await Book.find();
-    console.log("bookData : ", bookData);
-    res.json(bookData);
-  } catch (error) {
+    const { bookName, bookAuthor } = req.query;
+    if (bookName || bookAuthor) {
+      const bookData =
+        bookName && bookAuthor
+          ? await Book.find({ $and: [{ bookName }, { bookAuthor }] })
+          : await Book.find({ $or: [{ bookName }, { bookAuthor }] });
+      console.log("BookData : ", bookData);
+      res.json(bookData);
+    } else {
+      const bookData = await Book.find();
+      console.log("BookData : ", bookData);
+      res.json(bookData);
+  } 
+}
+  catch (error) {
     console.error(error);
   }
-});
+}
+);
 
 // app.post("/login", async (req, res) => {
 //   try {
